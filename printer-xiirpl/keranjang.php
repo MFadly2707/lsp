@@ -21,8 +21,8 @@ if(!isset($_SESSION["username"])){
 ?>
 
 <div class="keranjang-belanja container mt-3">
-        <h2>Keranjang Belanja</h2>
-        <table class="table table-responsive table-hover">
+    <h2>Keranjang Belanja</h2>
+    <table class="table table-responsive table-hover">
         <tr>
             <th>Foto</th>
             <th>Nama Produk</th>
@@ -33,22 +33,25 @@ if(!isset($_SESSION["username"])){
         </tr>
         <?php $gradTotal = 0; ?>
         <?php foreach ($_SESSION["cart"] as $id_produk => $kuantitas) : ?>
-            <?php
+        <?php
             $data = query("SELECT * FROM produk WHERE id_produk = '$id_produk'")[0];
             $totalHarga = $data["harga"] * $kuantitas;
             $gradTotal += $totalHarga;
             ?>
-            <tr>
-                <td><img src="image/<?= $data["foto"]; ?>" width="100"></td>
-                <td><?= $data["nama_produk"]; ?></td>
-                <td>Rp. <?= number_format($data["harga"], 0, ',', '.'); ?></td>
-                <td><?= $kuantitas; ?></td>
-                <td>Rp. <?= number_format($totalHarga , 0, ',', '.'); ?></td>
-                <td>
-                    <a class="btn btn-primary my-2" href="edit_keranjang.php?id=<?= $data["id_produk"]; ?>"><i class="fa-solid fa-pen"></i></a>
-                    <a class="btn btn-danger my-2" href="hapus_keranjang.php?id=<?= $data["id_produk"]; ?>" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Produk Ini Dari Keranjang?')"><i class="fa-solid fa-trash"></i></a>
-                </td>
-            </tr>
+        <tr>
+            <td><img src="image/<?= $data["foto"]; ?>" width="100"></td>
+            <td><?= $data["nama_produk"]; ?></td>
+            <td>Rp. <?= number_format($data["harga"], 0, ',', '.'); ?></td>
+            <td><?= $kuantitas; ?></td>
+            <td>Rp. <?= number_format($totalHarga , 0, ',', '.'); ?></td>
+            <td>
+                <a class="btn btn-primary my-2" href="edit_keranjang.php?id=<?= $data["id_produk"]; ?>"><i
+                        class="fa-solid fa-pen"></i></a>
+                <a class="btn btn-danger my-2" href="hapus_keranjang.php?id=<?= $data["id_produk"]; ?>"
+                    onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Produk Ini Dari Keranjang?')"><i
+                        class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
         <?php endforeach; ?>
         <tr>
             <td colspan="6">
@@ -57,7 +60,18 @@ if(!isset($_SESSION["username"])){
                 </h4>
             </td>
         </tr>
-        </table>
-        <a class="btn btn-primary" href="checkout.php"><i class="fa-solid fa-basket-shopping"></i> Checkout</a>
+    </table>
+    <a class="btn btn-primary" href="checkout.php"><i class="fa-solid fa-basket-shopping"></i> Checkout</a>
 </div>
+
+<?php
+if($kuantitas > $data["stok"]){
+    echo "
+    <script type='text/javascript'>
+        alert('Jumlah Yang Anda Pilih Melebihi Batas')
+        window.location = 'index.php';
+    </script>
+    ";
+}
+?>
 <?php include 'layout/footer.php'; ?>
