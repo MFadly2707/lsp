@@ -1,0 +1,31 @@
+<?php 
+// panggil koneksi
+require 'functions.php';
+
+// deklrasiin data-data apa aja yang mau kita input
+$nama_user = $_POST["nama_user"];
+$username = $_POST["username"];
+$password = $_POST["password"];
+
+// bikin sql/query-nya
+$query = mysqli_query($conn, "INSERT INTO user VALUES(NULL, '$nama_user', '$username', '$password')");
+
+// bikin kondisi kalo misalkan berhasil
+if($query){
+    echo "
+        <script type='text/javascript'>
+            alert('Data Berhasil Ditambahkan');
+            window.location = 'index.php'
+        </script>
+    ";
+}else{
+    echo "
+    <script type='text/javascript'>
+        alert('Data Gagal Ditambahkan');
+        window.location = 'index.php'
+    </script>
+";
+}
+
+
+?>
