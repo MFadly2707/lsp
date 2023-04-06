@@ -18,6 +18,7 @@ if(!isset($_SESSION["username"])){
     </script>
     ";
 }
+
 ?>
 
 <div class="keranjang-belanja container mt-3">
@@ -60,14 +61,6 @@ if(!isset($_SESSION["username"])){
         </table>
         <a class="btn btn-primary" href="checkout.php"><i class="fa-solid fa-basket-shopping"></i> Checkout</a>
 </div>
-<?php
-if($kuantitas > $data["stok_barang"]){
-    echo "
-    <script type='text/javascript'>
-        alert('Jumlah Yang Anda Pilih Melebihi Batas')
-        window.location = 'index.php';
-    </script>
-    ";
-}
-?>
+
+
 <?php include 'layout/footer.php'; ?>

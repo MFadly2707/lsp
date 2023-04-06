@@ -32,6 +32,8 @@ function checkoutBarang($data)
         $nama_user = $_SESSION["nama_user"];
         $nama_barang = $data["nama_barang"];
         $price = $totalHarga;
+        $stok = $barang["stok_barang"];
+        $sisa = $stok - $result;
         $foto = $barang["foto"];
         $st = 'proses';
 
@@ -47,8 +49,12 @@ function checkoutBarang($data)
             '$foto',
             '$st')";
         // masukan ke database
-
+        unset($_SESSION['cart']);
         mysqli_query($conn, $queryCheckout);
+        if ($queryCheckout) {
+            $updateStok = mysqli_query($conn, "UPDATE barang SET stok_barang = '$sisa'
+            WHERE id_barang = '$barang_id'");
+        }
         ?>
         <?php
     endforeach;

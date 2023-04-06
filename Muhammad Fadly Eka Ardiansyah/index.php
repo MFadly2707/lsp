@@ -1,13 +1,13 @@
 <?php 
 include 'layout/navbar.php';
 ?>
-<?php $produk = query("SELECT * FROM barang"); ?>
+<?php $barang = query("SELECT * FROM barang WHERE stok_barang > 0"); ?>
 
 <div id="home" class="produk container">
     <h2 class="my-3">Produk Yang Tersedia</h2>
     <div class="row">
         <?php $i = 1;?>
-        <?php foreach($produk as $data) : ?>
+        <?php foreach($barang as $data) : ?>
         <div class="col-md-3 mb-3">
             <div class="card">
             <img src="image/<?= $data['foto']; ?>" class="card-img-top" alt="<?= $data['nama_barang']; ?>">
